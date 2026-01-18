@@ -1,0 +1,110 @@
+﻿<Window x:Class="alarm_vs_preview61825at113pm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:alarm_vs_preview61825at113pm"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="500" 
+        Width="355"        
+        WindowStyle="None"        
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="Manual"
+        Background="Transparent"
+        >
+    <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Calendar}">
+                        <Viewbox Height="240" Width="240">
+                            <CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#414850">
+        <Button x:Name="HomeCloseButton" Content="X" Padding="0,-3,0,0" Foreground="#e3434a" FontSize="21" Width="50" Height="25" HorizontalAlignment="Left" Margin="299,1,0,0" VerticalAlignment="Top" Click="HomeCloseButton_Click"/>
+
+        <DatePicker x:Name="MyDatePicker" CalendarStyle="{StaticResource styleCalendar}" Height="25" Loaded="DatePicker_Loaded" HorizontalAlignment="Left" Margin="184,174,0,0" VerticalAlignment="Top" Width="165">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="IsReadOnly" Value="True" />
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+
+        <TextBlock x:Name="SetMessage" Height="35" FontSize="12.5" TextWrapping="Wrap" Foreground="White" Margin="16,229,195,236">
+            Set Alarm Message <LineBreak/> 
+            (Maximum 25 Characters):
+        </TextBlock>
+
+        <TextBox x:Name="HoursMinutesTb" Height="25" HorizontalAlignment="Left" Margin="186,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" />
+        <TextBox x:Name="AlarmMessageTb" MaxLength="25" Height="34" TextWrapping="Wrap" Margin="186,229,10,237"  />
+        <Button x:Name="SaveAlarmButton" Content=" Save Alarm " Click="SaveAlarmButton_Click" Height="26" Margin="269,265,10,209"/>
+
+        <ListView x:Name="AlarmListBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding _users}" Margin="10,305,10,37">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="30">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Tag="{Binding}" HorizontalAlignment="Right" Height="20" Checked="Chck_Checked" Unchecked="Chck_Checked"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Upcoming Alarms" Width="135">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Date}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Message" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Message}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <TextBlock Foreground="White" TextWrapping="Wrap" Text="Alarm List" FontSize="13" Height="22" Width="60" Margin="150,287,145,191"/>
+        <Button x:Name="CheckRemoveButton" Content="Remove" Height="25" Width="74" Margin="268,467,13,8" Click="CheckRemoveButton_Click"/>
+
+        <Button x:Name="HomeMinimizeButton" Width="50" Height="25" HorizontalAlignment="Left" Margin="248,1,0,0" VerticalAlignment="Top" Click="HomeMinimizeButton_Click">
+            <Image Source="/Images/Minimize.png"/>
+        </Button>
+
+        <Button x:Name="FAQButton" Margin="5,3,285,471" Click="FAQButton_Click" >
+            <StackPanel Orientation="Horizontal" Background="#515a64">
+                <Image Source="/Images/Faq.png" />
+                <TextBlock Foreground="White" Padding= "5,3,0,0" FontSize="14" VerticalAlignment="Center" Width="60" Height="26">
+                    FAQ
+                </TextBlock>
+            </StackPanel>
+        </Button>
+
+        <TextBlock x:Name="MyTime"  TextWrapping="Wrap" FontSize="13" Text="" Foreground="White" Margin="80,30,57,448" />
+        <TextBlock Text="Set Timer" Padding="0,0,0,0" FontWeight="DemiBold" Foreground="White" FontSize="15" TextWrapping="Wrap"  Margin="155,52,132,430" />
+        <TextBlock Text="Set Alarm Clock" FontWeight="DemiBold" Foreground="White" FontSize="15" TextWrapping="Wrap"  Margin="129,153,117,328" />
+        <TextBox x:Name="tbTime" Padding="14,-15,0,0" Text="00:00:00" FontSize="45" TextWrapping="Wrap" Margin="91,75,65,390" />
+        <Button x:Name="TimerStartButton_Click" Click="Start_Click" Content="Start Timer" Height="26" Width="74" Margin="90,114,191,360"/>
+        <Button Click="Cancel_Click" Content="Reset Timer" Height="26" Width="74" Margin="216,114,65,360"/>
+        <TextBlock x:Name="SetTime" FontSize="12.5" TextWrapping="Wrap" Foreground="White" Margin="16,205,195,277"><Run Text="Set Time (Ex: 9:30 AM):"/></TextBlock>
+        <TextBlock x:Name="SetDate" FontSize="12.5" TextWrapping="Wrap" Foreground="White" Margin="16,178,181,304"><Run Text="Set Date Via Calendar Icon:"/></TextBlock>
+
+    </Grid>
+
+</Window>
